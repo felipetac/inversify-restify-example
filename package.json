@@ -1,0 +1,27 @@
+{
+  "name": "inversify-restify-example",
+  "version": "1.0.0",
+  "description": "Exemplo de Utilização das libs",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "inversify",
+    "restify"
+  ],
+  "author": "Felipe Toscano",
+  "license": "ISC",
+  "dependencies": {
+    "inversify": "^4.3.0",
+    "inversify-restify-utils": "^3.2.0",
+    "morgan": "^1.8.2",
+    "reflect-metadata": "^0.1.10"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^3.2.2",
+    "typescript": "^2.5.3"
+  }
+}
