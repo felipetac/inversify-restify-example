@@ -6,8 +6,8 @@ import * as morgan from 'morgan';
 let server = new InversifyRestifyServer(container);
 server
     .setConfig((app) => {
-        var logger = morgan('combined')
+        let logger = morgan('combined');
         app.use(logger);
     })
     .build()
-    .listen(3000);
+    .listen(3001);
