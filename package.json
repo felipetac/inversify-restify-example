@@ -21,7 +21,12 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-tslint": "^8.1.2",
     "gulp-typescript": "^3.2.2",
+    "nodemon": "^1.12.1",
+    "run-sequence": "^2.2.0",
+    "tslint": "^5.7.0",
     "typescript": "^2.5.3"
   }
 }
