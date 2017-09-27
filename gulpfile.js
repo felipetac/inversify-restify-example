@@ -49,7 +49,7 @@ gulp.task('watch', ['default'], () => {
 //* RUN
 //******************************************************************************
 gulp.task('run', ['lint', 'build'], () => {
-    var stream = nodemon({ 
+    nodemon({ 
         script: 'dist/index.js', 
         ext: 'ts', 
         ignore: [
@@ -57,8 +57,6 @@ gulp.task('run', ['lint', 'build'], () => {
         ],
         tasks: ['lint', 'build']
     })
-
-    stream
     .on('restart', function () {
         console.log('Restarted!')
     })
