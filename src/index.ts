@@ -2,7 +2,7 @@ import { InversifyRestifyServer } from 'inversify-restify-utils';
 import { container } from './config/container';
 import * as morgan from 'morgan';
 
-const port = normalizePort(process.env.PORT || 3001);
+const port = normalizePort(process.env.PORT || 3000);
 let server = new InversifyRestifyServer(container);
 
 function normalizePort(val: number|string): number|string|boolean {
