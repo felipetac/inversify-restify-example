@@ -41,15 +41,16 @@ gulp.task("build", function() {
 //******************************************************************************
 //* WATCH
 //******************************************************************************
-gulp.task('watch', ['default'], () => {
-    gulp.watch('src/**/*.ts', ['default']);
+gulp.task('watch', ['lint', 'build'], () => {
+    gulp.watch('src/**/*.ts', ['lint', 'build']);
 });
 
 //******************************************************************************
 //* RUN
 //******************************************************************************
-gulp.task('run', ['lint', 'build'], () => {
+gulp.task('run', function () {
     nodemon({ 
+        legacyWatch: true, // Setei este parametro para evitar restart desnecessário
         script: 'dist/index.js', 
         ext: 'ts', 
         ignore: [
@@ -62,7 +63,7 @@ gulp.task('run', ['lint', 'build'], () => {
     })
     .on('crash', function() {
         console.error('Application has crashed!\n')
-        stream.emit('restart', 10)  // restart the server in 10 seconds 
+        stream.emit('restart', 10)  // Restart o servidor a cada 10 segundos 
     })
 });
 
@@ -70,5 +71,5 @@ gulp.task('run', ['lint', 'build'], () => {
 //* DEFAULT
 //******************************************************************************
 gulp.task("default", function (cb) {
-  runSequence("lint", "build", cb);
+  runSequence("lint", "build", "run", cb);
 });
