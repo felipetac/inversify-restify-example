@@ -17,7 +17,8 @@
     "inversify": "^4.3.0",
     "inversify-restify-utils": "^3.2.0",
     "morgan": "^1.8.2",
-    "reflect-metadata": "^0.1.10"
+    "reflect-metadata": "^0.1.10",
+    "rotating-file-stream": "^1.3.2"
   },
   "devDependencies": {
     "@types/morgan": "^1.7.33",

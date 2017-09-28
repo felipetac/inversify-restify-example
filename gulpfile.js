@@ -59,10 +59,10 @@ gulp.task('run', function () {
         tasks: ['lint', 'build']
     })
     .on('restart', function () {
-        console.log('Restarted!')
+        console.log('Restarted')
     })
     .on('crash', function() {
-        console.error('Application has crashed!\n')
+        console.error('Application has crashed\n')
         stream.emit('restart', 10)  // Restart o servidor a cada 10 segundos 
     })
 });
