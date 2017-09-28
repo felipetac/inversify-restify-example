@@ -7,12 +7,12 @@ import rfs = require('rotating-file-stream');
 
 let logDirectory = path.join(__dirname, 'log');
 
-// ensure log directory exists
+// Verifica se o diretório de log existe
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 
-// create a rotating write stream
+// Create a rotating write stream
 let accessLogStream = rfs('access.log', {
-    interval: '1d', // rotate daily
+    interval: '1d', // Estabelece logs diários d-1
     path: logDirectory
 });
 
