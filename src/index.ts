@@ -35,6 +35,7 @@ server
         app.use(morgan('combined', {stream: accessLogStream}));
     })
     .build()
-    .listen(port);
+    .listen(port, 'localhost', () => {
+        console.log(`Listening on ${port}`);
+    });
 
-console.log(`Listening on ${port}`);

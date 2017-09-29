@@ -1,15 +1,14 @@
 import * as restify from 'restify';
-import { Controller, Get, Post, Put, Delete, interfaces } from 'inversify-restify-utils';
+import { Controller as Router, Get, Post, Put, Delete, interfaces } from 'inversify-restify-utils';
 import { injectable, inject } from 'inversify';
 import TYPES from '../constant/types';
 import { IUser } from '../interface/user';
-import { UserService } from '../service/user';
 
-@Controller('/user')
+@Router('/user')
 @injectable()
 export class UserController implements interfaces.Controller {
 
-    constructor(@inject(TYPES.UserService) private userService: UserService) {}
+    @inject(TYPES.UserService) private userService;
 
     @Get('/')
     private getUsers(): IUser[] {

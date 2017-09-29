@@ -6,12 +6,14 @@ export class UserService {
 
     private userStorage: IUser[] = [
         {
-            email: 'lorem@ipsum.com',
-            name: 'Lorem'
+            email: 'felipe.cardoso@ipsum.com',
+            firstName: 'Felipe',
+            lastName: 'Cardoso'
         },
         {
-            email: 'doloe@sit.com',
-            name: 'Dolor'
+            email: 'bruno.silva@ipsum.com',
+            firstName: 'Bruno',
+            lastName: 'Silva'
         }
     ];
 
@@ -23,7 +25,7 @@ export class UserService {
     public getUser(id: string): IUser {
         let result: IUser;
         this.userStorage.map(user => {
-            if (user.name === id) {
+            if (user.firstName === id) {
                 result = user;
             }
         });
@@ -38,7 +40,7 @@ export class UserService {
 
     public updateUser(id: string, user: IUser): IUser {
         this.userStorage.map((entry, index) => {
-            if (entry.name === id) {
+            if (entry.firstName === id) {
                 this.userStorage[index] = user;
             }
         });
@@ -49,7 +51,7 @@ export class UserService {
     public deleteUser(id: string): string {
         let updatedUser: IUser[] = [];
         this.userStorage.map(user => {
-            if (user.name !== id) {
+            if (user.firstName !== id) {
                 updatedUser.push(user);
             }
         });

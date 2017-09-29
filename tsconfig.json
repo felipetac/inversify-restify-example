@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "lib": ["es6", "dom"],
-        "types": ["reflect-metadata", "node", "morgan"],
+        "types": ["reflect-metadata", "node", "morgan", "mongodb", "mongoose"],
         "module": "commonjs",
         "moduleResolution": "node",
         "experimentalDecorators": true,
