@@ -1,18 +1,18 @@
-import { InversifyRestifyServer } from 'inversify-restify-utils';
-import container  from '../config/container';
+import { injectable, inject } from 'inversify';
 import TYPES from '../constant/types';
-import { injectable } from 'inversify';
 
 @injectable()
 export class Server {
 
-    constructor() {
+    private _server;
+    private _logger;
+
+    constructor(@inject(TYPES.ServerRestify) _server, @inject(TYPES.Log) _logger) {
         let port = process.env.PORT || 3000;
         port = (typeof port === 'string') ? parseInt(port, 10) : port;
-        container
-            .get<InversifyRestifyServer>(TYPES.ServerRestify)
+        _server
             .setConfig((app) => {
-                app.use(container.get(TYPES.Log));
+                app.use(_logger);
             })
             .build()
             .listen(port, 'localhost', () => {
