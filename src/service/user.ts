@@ -1,8 +1,11 @@
-import { injectable } from 'inversify';
-import { IUser } from '../interface/user';
+import { injectable, inject } from 'inversify';
+import TYPES from '../constant/types';
+import { IUser, IUserModel } from '../interface/user';
 
 @injectable()
 export class UserService {
+
+    @inject(TYPES.UserModel) private _model;
 
     private userStorage: IUser[] = [
         {
@@ -16,7 +19,6 @@ export class UserService {
             lastName: 'Silva'
         }
     ];
-
 
     public getUsers(): IUser[] {
         return this.userStorage;
@@ -33,9 +35,10 @@ export class UserService {
         return result;
     }
 
-    public newUser(user: IUser): IUser {
-        this.userStorage.push(user);
-        return user;
+    public newUser(user: IUser): IUserModel {
+        return this._model(user).save().then(function(result) {
+            return result;
+        });
     }
 
     public updateUser(id: string, user: IUser): IUser {

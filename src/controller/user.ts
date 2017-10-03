@@ -2,7 +2,7 @@ import * as restify from 'restify';
 import { Controller as Router, Get, Post, Put, Delete, interfaces } from 'inversify-restify-utils';
 import { injectable, inject } from 'inversify';
 import TYPES from '../constant/types';
-import { IUser } from '../interface/user';
+import { IUser, IUserModel } from '../interface/user';
 
 @Router('/user')
 @injectable()
@@ -10,7 +10,7 @@ export class UserController implements interfaces.Controller {
 
     @inject(TYPES.UserService) private userService;
 
-    @Get('/')
+    // @Get('/')
     private getUsers(): IUser[] {
         return this.userService.getUsers();
     }
@@ -20,9 +20,14 @@ export class UserController implements interfaces.Controller {
         return this.userService.getUser(req.params.id);
     }
 
-    @Post('/')
-    private newUser(req: restify.Request): IUser {
-        return this.userService.newUser(req.body);
+    @Get('/') // ToDo: Funcionando! Porém é teste! Colocar lugar certo!
+    private newUser(req: restify.Request): IUserModel {
+        let user: IUser = {
+            email: 'foo@bar.com',
+            firstName: 'Brian',
+            lastName: 'Love'
+        };
+        return this.userService.newUser(user);
     }
 
     @Put('/:id')

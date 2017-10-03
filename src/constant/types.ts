@@ -3,6 +3,7 @@ const TYPES = {
     Log: Symbol('Log'),
     Server: Symbol('Server'),
     ServerRestify: Symbol('ServerRestify'),
+    UserModel: Symbol('UserModel'),
     UserService: Symbol('UserService')
 };
 
