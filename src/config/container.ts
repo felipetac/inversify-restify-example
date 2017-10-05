@@ -19,7 +19,7 @@ container.bind<interfaces.Controller>(TYPE.Controller).to(UserController).whenTa
 container.bind<UserService>(TYPES.UserService).to(UserService);
 container.bind(TYPES.Database).toConstantValue(mongoose);
 container.bind(TYPES.Log).toConstantValue(logger);
-container.bind(TYPES.ServerRestify).toConstantValue(new InversifyRestifyServer(container));
+container.bind(TYPES.ServerRestify).toConstantValue(new InversifyRestifyServer(container, {log: logger}));
 container.bind<Server>(TYPES.Server).to(Server);
 container.bind(TYPES.UserModel).toConstantValue(mongoose.model<IUserModel>('User', UserSchema));
 export default container;

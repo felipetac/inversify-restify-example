@@ -12,17 +12,20 @@ export class UserController implements interfaces.Controller {
     @inject(TYPES.UserService) private userService: UserService;
 
     @Get('/')
-    private getUsers(): Promise<IUserModel[]> {
+    private getUsers(req: restify.Request): Promise<IUserModel[]> {
+        req.log.trace('caller is "TESTEEEEEE"');
         return this.userService.getUsers();
     }
 
     @Get('/:id')
     private getUser(req: restify.Request): Promise<IUserModel> {
-        return this.userService.getUser(req.params.id);
+        let user = this.userService.getUser(req.params.id);
+        return user;
     }
 
     @Post('/')
     private newUser(req: restify.Request): Promise<IUserModel> {
+        console.log(req.body);
         let user: IUser = {
             email: req.params.email,
             firstName: req.params.firstName,
