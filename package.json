@@ -27,6 +27,7 @@
     "@types/mongoose": "^4.7.23",
     "@types/morgan": "^1.7.33",
     "@types/node": "^8.0.31",
+    "@types/restify": "^5.0.5",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",
     "gulp-tslint": "^8.1.2",

@@ -4,15 +4,12 @@ import TYPES from '../constant/types';
 @injectable()
 export class Server {
 
-    private _server;
-    private _logger;
-
-    constructor(@inject(TYPES.ServerRestify) _server, @inject(TYPES.Log) _logger) {
+    constructor(@inject(TYPES.ServerRestify) server, @inject(TYPES.Log) logger) {
         let port = process.env.PORT || 3000;
         port = (typeof port === 'string') ? parseInt(port, 10) : port;
-        _server
+        server
             .setConfig((app) => {
-                app.use(_logger);
+                app.use(logger);
             })
             .build()
             .listen(port, 'localhost', () => {
