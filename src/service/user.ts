@@ -6,16 +6,21 @@ import { IUser, IUserModel } from '../interface/user';
 @injectable()
 export class UserService {
 
-    @inject(TYPES.UserModel) private _model: Model<IUserModel>;
+    @inject(TYPES.UserModel) private model: Model<IUserModel>;
 
     public getUsers(): Promise<IUserModel[]> {
-        return this._model.find().then(function(result) {
-            return result;
-        });
+        return this.model.find().then(
+            function(result) {
+                return result;
+            },
+            function(err) {
+                return err;
+            }
+        );
     }
 
-    public getUser(id: string): Promise<JSON | IUserModel> {
-        return this._model.findById(id).then(
+    public getUser(id: string): Promise<IUserModel> {
+        return this.model.findById(id).then(
             function(result) {
                 return result;
             },
@@ -25,30 +30,40 @@ export class UserService {
     }
 
     public newUser(user: IUser): Promise<IUserModel> {
-        return new this._model(user).save().then(function(result) {
-            return result;
-        });
+        return new this.model(user).save().then(
+            function(result) {
+                return result;
+            },
+            function(err) {
+                return err;
+            }
+        );
     }
 
     public updateUser(id: string, user: IUser): Promise<IUserModel> {
-        return this._model.findById(id).then(function(entity) {
+        return this.model.findById(id).then(function(entity) {
             entity.email = user.email || entity.email;
             entity.firstName = user.firstName || entity.firstName;
             entity.lastName = user.lastName || entity.lastName;
-            return entity.save().then(function(result) {
+            return entity.save();
+        }).then(
+            function(result) {
                 return result;
-            });
-        });
+            },
+            function(err) {
+                return err;
+            }
+        );
     }
 
-    public deleteUser(id: string): Promise<boolean | IUserModel> {
-        return this._model.findByIdAndRemove(id).then(function(result) {
-            if (!result) {
-                return false;
+    public deleteUser(id: string): Promise<IUserModel> {
+        return this.model.findByIdAndRemove(id).then(
+            function(result) {
+                return result;
+            },
+            function(err) {
+                return err;
             }
-            return result;
-        }, function(err) {
-            console.log(err);
-        });
+        );
     }
 }

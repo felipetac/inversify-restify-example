@@ -12,12 +12,12 @@ export class UserController implements interfaces.Controller {
     @inject(TYPES.UserService) private userService: UserService;
 
     @Get('/')
-    private getUsers(): Promise<JSON | IUserModel[]> {
+    private getUsers(): Promise<IUserModel[]> {
         return this.userService.getUsers();
     }
 
     @Get('/:id')
-    private getUser(req: restify.Request): Promise<JSON | IUserModel> {
+    private getUser(req: restify.Request): Promise<IUserModel> {
         return this.userService.getUser(req.params.id);
     }
 
@@ -37,7 +37,7 @@ export class UserController implements interfaces.Controller {
     }
 
     @Delete('/:id')
-    private deleteUser(req: restify.Request): Promise<boolean | IUserModel> {
+    private deleteUser(req: restify.Request): Promise<IUserModel> {
         return this.userService.deleteUser(req.params.id);
     }
 }
