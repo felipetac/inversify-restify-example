@@ -13,7 +13,7 @@ export class UserController implements interfaces.Controller {
 
     @Get('/')
     private getUsers(req: restify.Request): Promise<IUserModel[]> {
-        req.log.trace('caller is "TESTEEEEEE"');
+        // req.log.trace('caller is "TESTEEEEEE"');
         return this.userService.getUsers();
     }
 
@@ -25,18 +25,23 @@ export class UserController implements interfaces.Controller {
 
     @Post('/')
     private newUser(req: restify.Request): Promise<IUserModel> {
-        console.log(req.body);
         let user: IUser = {
-            email: req.params.email,
-            firstName: req.params.firstName,
-            lastName: req.params.lastName
+            email: req.body.email,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
         };
         return this.userService.newUser(user);
     }
 
     @Put('/:id')
     private updateUser(req: restify.Request): Promise<IUserModel> {
-        return this.userService.updateUser(req.params.id, req.body);
+
+        let user: IUser = {
+            email: req.body.email,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
+        };
+        return this.userService.updateUser(req.params.id, user);
     }
 
     @Delete('/:id')

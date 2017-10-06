@@ -41,12 +41,11 @@ export class UserService {
     }
 
     public updateUser(id: string, user: IUser): Promise<IUserModel> {
-        return this.model.findById(id).then(function(entity) {
-            entity.email = user.email || entity.email;
-            entity.firstName = user.firstName || entity.firstName;
-            entity.lastName = user.lastName || entity.lastName;
-            return entity.save();
-        }).then(
+        return this.model.findById(id)
+        .then(function(entity) {
+            return entity.hydrate(user).save();
+        })
+        .then(
             function(result) {
                 return result;
             },

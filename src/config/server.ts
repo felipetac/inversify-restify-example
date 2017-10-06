@@ -10,20 +10,21 @@ export class Server {
         port = (typeof port === 'string') ? parseInt(port, 10) : port;
         server
             .setConfig((app) => {
+
+                app.use(restify.plugins.acceptParser(app.acceptable));
+
                 // to get query params in req.query
                 // app.use(restify.plugins.queryParser());
-                app.use(restify.plugins.acceptParser(app.acceptable));
+
                 // to get passed json in req.body
                 app.use(restify.plugins.bodyParser());
-
-                // morgan logger
-                // app.use(logger);
 
                 // audit logger
                 app.on('after', restify.plugins.auditLogger({
                     event: 'after',
                     log: logger
                 }));
+
             })
             .build()
             .listen(port, 'localhost', () => {

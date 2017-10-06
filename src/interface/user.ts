@@ -8,4 +8,5 @@ export interface IUser {
 
 export interface IUserModel extends IUser, Document {
     fullName(): string;
+    hydrate(user: IUser);
 }
