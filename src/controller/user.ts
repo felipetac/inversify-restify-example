@@ -4,6 +4,7 @@ import { injectable, inject } from 'inversify';
 import TYPES from '../constant/types';
 import { IUser, IUserModel } from '../interface/user';
 import { UserService } from '../service/user';
+import { ValidationError } from 'class-validator';
 
 @Router('/user')
 @injectable()
@@ -18,13 +19,13 @@ export class UserController implements interfaces.Controller {
     }
 
     @Get('/:id')
-    private getUser(req: restify.Request): Promise<IUserModel> {
+    private getUser(req: restify.Request): Promise<IUserModel | ValidationError[]> {
         let user = this.userService.getUser(req.params.id);
         return user;
     }
 
     @Post('/')
-    private newUser(req: restify.Request): Promise<IUserModel> {
+    private newUser(req: restify.Request): Promise<IUserModel | ValidationError[]> {
         let user: IUser = {
             email: req.body.email,
             firstName: req.body.firstName,
@@ -34,18 +35,20 @@ export class UserController implements interfaces.Controller {
     }
 
     @Put('/:id')
-    private updateUser(req: restify.Request): Promise<IUserModel> {
+    private updateUser(req: restify.Request): Promise<IUserModel | ValidationError[]> {
 
         let user: IUser = {
             email: req.body.email,
             firstName: req.body.firstName,
+            id: req.params.id,
             lastName: req.body.lastName
         };
-        return this.userService.updateUser(req.params.id, user);
+        return this.userService.updateUser(user);
     }
 
     @Delete('/:id')
-    private deleteUser(req: restify.Request): Promise<IUserModel> {
+    private deleteUser(req: restify.Request): Promise<IUserModel | ValidationError[]> {
         return this.userService.deleteUser(req.params.id);
     }
+
 }

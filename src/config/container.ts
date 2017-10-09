@@ -11,6 +11,7 @@ import mongoose from '../config/database';
 import logger from '../config/log';
 import { IUserModel } from '../interface/user';
 import UserSchema from '../schema/user';
+import { UserForm } from '../form/user';
 
 // load everything needed to the Container
 const container = new Container();
@@ -22,5 +23,6 @@ container.bind(TYPES.Log).toConstantValue(logger);
 container.bind(TYPES.ServerRestify).toConstantValue(new InversifyRestifyServer(container, {log: logger}));
 container.bind<Server>(TYPES.Server).to(Server);
 container.bind(TYPES.UserModel).toConstantValue(mongoose.model<IUserModel>('User', UserSchema));
+container.bind<UserForm>(TYPES.UserForm).to(UserForm);
 export default container;
 
