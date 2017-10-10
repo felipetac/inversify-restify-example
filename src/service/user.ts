@@ -21,33 +21,31 @@ export class UserService {
     }
 
     public getUser(id: string): Promise<IUserModel | ValidationError[]> {
-        const m = this.model;
         return this.form.validId(id)
         .then(
-            function(errors) {
-                if (errors.length > 0) {
-                    return errors;
-                } else {
-                    return m.findById(id).then(
-                        function(res) {
-                            if (!res) {
-                                return {success: 'false', msg: `Usuário com id:${id} não foi encontrado!`};
+            (errors) => {
+                    if (errors.length > 0) {
+                        return errors;
+                    } else {
+                        return this.model.findById(id).then(
+                            function(res) {
+                                if (!res) {
+                                    return {success: 'false', msg: `Usuário com id:${id} não foi encontrado!`};
+                                }
+                                return res;
                             }
-                            return res;
-                        }
-                    );
-                }
+                        );
+                    }
             }
         );
     }
 
     public newUser(user: IUser): Promise<IUserModel | ValidationError[]> {
-        const m = this.model;
-        return this.form.polulate(user).validate('create').then(function(errors) {
+        return this.form.polulate(user).validate('create').then((errors) => {
             if (errors.length > 0) {
                 return errors;
             } else {
-                return new m(user).save()
+                return new this.model(user).save()
                 .then(
                     function(result) {
                         return result;
@@ -58,12 +56,11 @@ export class UserService {
     }
 
     public updateUser(user: IUser): Promise<IUserModel | ValidationError[]> {
-        const m = this.model;
-        return this.form.polulate(user).validate('update').then(function(errors) {
+        return this.form.polulate(user).validate('update').then((errors) => {
             if (errors.length > 0) {
                 return errors;
             } else {
-                return m.findById(user.id)
+                return this.model.findById(user.id)
                 .then(
                     function(entity) {
                         if (!entity) {
@@ -82,14 +79,12 @@ export class UserService {
     }
 
     public deleteUser(id: string): Promise<IUserModel | ValidationError[]> {
-        const m = this.model;
-        return this.form.validId(id).then(
-            function(errors) {
+        return this.form.validId(id).then((errors) =>  {
                 if (errors.length > 0) {
                     return errors;
                 } else {
                     console.log('Entrei Model...');
-                    return m.findByIdAndRemove(id).then(
+                    return this.model.findByIdAndRemove(id).then(
                         function(res) {
                             if (!res) {
                                 return {success: 'false', msg: `Usuário com id:${id} não foi encontrado!`};
