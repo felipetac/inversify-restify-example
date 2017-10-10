@@ -16,24 +16,29 @@ export class UserService {
         return this.model.find().then(
             function(result) {
                 return result;
-            },
-            function(err) {
-                return err;
             }
         );
     }
 
     public getUser(id: string): Promise<IUserModel | ValidationError[]> {
         const m = this.model;
-        return this.form.validId(id).then(function(errors: any) {
-            if (errors.length > 0) {
-                return errors;
-            } else {
-                return m.findById(id);
+        return this.form.validId(id)
+        .then(
+            function(errors: any) {
+                if (errors.length > 0) {
+                    return errors;
+                } else {
+                    return m.findById(id).then(
+                        function(res) {
+                            if (!res) {
+                                return {success: 'false', msg: `Usuário com id:${id} não foi encontrado!`};
+                            }
+                            return res;
+                        }
+                    );
+                }
             }
-        }).then(function(result){
-            return result;
-        });
+        );
     }
 
     public newUser(user: IUser): Promise<IUserModel | ValidationError[]> {
@@ -46,9 +51,6 @@ export class UserService {
                 .then(
                     function(result) {
                         return result;
-                    },
-                    function(err) {
-                        return err;
                     }
                 );
             }
@@ -65,13 +67,11 @@ export class UserService {
                 .then(
                     function(entity) {
                         return entity.hydrate(user).save();
-                })
+                    }
+                )
                 .then(
                     function(res) {
                         return res;
-                    },
-                    function(err) {
-                        return err;
                     }
                 );
             }
@@ -80,19 +80,22 @@ export class UserService {
 
     public deleteUser(id: string): Promise<IUserModel | ValidationError[]> {
         const m = this.model;
-        return this.form.validId(id).then(function(errors) {
-            if (errors.length > 0) {
-                return errors;
-            } else {
-                return m.findByIdAndRemove(id).then(
-                    function(res) {
-                        return res;
-                    },
-                    function(err) {
-                        return err;
-                    }
-                );
+        return this.form.validId(id).then(
+            function(errors) {
+                if (errors.length > 0) {
+                    return errors;
+                } else {
+                    console.log('Entrei Model...');
+                    return m.findByIdAndRemove(id).then(
+                        function(res) {
+                            if (!res) {
+                                return {success: 'false', msg: `Usuário com id:${id} não foi encontrado!`};
+                            }
+                            return res;
+                        }
+                    );
+                }
             }
-        });
+        );
     }
 }
