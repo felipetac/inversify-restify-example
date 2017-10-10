@@ -25,9 +25,5 @@ container.bind<Server>(TYPES.Server).to(Server);
 container.bind(TYPES.UserModel).toConstantValue(mongoose.model<IUserModel>('User', UserSchema));
 container.bind<UserForm>(TYPES.UserForm).to(UserForm);
 
-container.bind(TYPES.UserModelProvider).toProvider(() => {
-    return container.get(TYPES.UserModel);
-});
-
 export default container;
 

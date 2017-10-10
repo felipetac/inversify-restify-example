@@ -10,7 +10,7 @@ import container from '../config/container';
 export class UserService {
 
     @inject(TYPES.UserForm) private form;
-    @inject(TYPES.UserModelProvider) private model;
+    @inject(TYPES.UserModel) private model;
 
     public getUsers(): Promise<IUserModel[]> {
         return this.model.find().then(

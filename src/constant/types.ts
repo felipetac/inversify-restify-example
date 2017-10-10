@@ -5,7 +5,6 @@ const TYPES = {
     ServerRestify: Symbol('ServerRestify'),
     UserForm: Symbol('UserForm'),
     UserModel: Symbol('UserModel'),
-    UserModelProvider: () => Promise,
     UserService: Symbol('UserService')
 };
 
