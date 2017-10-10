@@ -1,11 +1,16 @@
 import { Length, IsEmail, IsNotEmpty, validate as valid, ValidationError, IsMongoId} from 'class-validator';
+import { IsUserAlreadyExist } from '../validator/user';
 import { IUser } from '../interface/user';
 import { injectable } from 'inversify';
 
 @injectable()
 export class UserForm implements IUser {
 
-    @IsMongoId({groups: ['update', 'id']})
+    @IsUserAlreadyExist({groups: ['update', 'id']})
+    @IsMongoId({
+        groups: ['update', 'id'],
+        message: 'O Id:$value precisa ser um MongoDB Id'
+    })
     @IsNotEmpty({groups: ['update', 'id']})
     public id: string;
 

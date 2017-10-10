@@ -29,9 +29,6 @@ export class UserService {
                     } else {
                         return this.model.findById(id).then(
                             function(res) {
-                                if (!res) {
-                                    return {success: 'false', msg: `Usuário com id:${id} não foi encontrado!`};
-                                }
                                 return res;
                             }
                         );
@@ -63,9 +60,6 @@ export class UserService {
                 return this.model.findById(user.id)
                 .then(
                     function(entity) {
-                        if (!entity) {
-                            return {success: 'false', msg: `Usuário com id:${user.id} não foi encontrado!`};
-                        }
                         return entity.hydrate(user).save();
                     }
                 )
@@ -86,9 +80,6 @@ export class UserService {
                     console.log('Entrei Model...');
                     return this.model.findByIdAndRemove(id).then(
                         function(res) {
-                            if (!res) {
-                                return {success: 'false', msg: `Usuário com id:${id} não foi encontrado!`};
-                            }
                             return res;
                         }
                     );
