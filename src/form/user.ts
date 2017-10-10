@@ -36,7 +36,9 @@ export class UserForm implements IUser {
 
     public validate(group): Promise<ValidationError[]> {
         return valid(this, {
-            groups: [group]
+            groups: [group],
+            skipMissingProperties: true, // skip validation of the properties that does not exist in the validating object
+            validationError: { target: false } // useful when you send errors back over http
         });
     }
 
