@@ -1,6 +1,8 @@
 import { Length, IsEmail, IsNotEmpty, validate as valid, ValidationError, IsMongoId} from 'class-validator';
 import { IUser } from '../interface/user';
+import { injectable } from 'inversify';
 
+@injectable()
 export class UserForm implements IUser {
 
     @IsMongoId({groups: ['update', 'id']})
@@ -27,16 +29,19 @@ export class UserForm implements IUser {
         return this;
     }
 
-    public validate(group): Promise<true | ValidationError[]> {
+    public setId(id: string): UserForm {
+        this.id = id;
+        return this;
+    }
+
+    public validate(group): Promise<ValidationError[]> {
         return valid(this, {
             groups: [group]
-        }).then(function(errors) {
-            if (errors.length > 0) {
-                return errors;
-            } else {
-                return true;
-            }
         });
+    }
+
+    public validId(id): Promise<ValidationError[]> {
+        return this.setId(id).validate('id');
     }
 
 }

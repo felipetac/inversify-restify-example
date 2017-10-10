@@ -4,12 +4,13 @@ import TYPES from '../constant/types';
 import { IUser, IUserModel } from '../interface/user';
 import { UserForm } from '../form/user';
 import { ValidationError } from 'class-validator';
+import container from '../config/container';
 
 @injectable()
 export class UserService {
 
-    @inject(TYPES.UserModel) private model: Model<IUserModel>;
-    @inject(TYPES.UserForm) private form: UserForm;
+    @inject(TYPES.UserForm) private form;
+    @inject(TYPES.UserModelProvider) private model;
 
     public getUsers(): Promise<IUserModel[]> {
         return this.model.find().then(
@@ -23,45 +24,47 @@ export class UserService {
     }
 
     public getUser(id: string): Promise<IUserModel | ValidationError[]> {
-        let user: IUser = { id: id };
-        return this.form.polulate(user).validate('id').then(function(result) {
-            if (result === true) {
-                return this.model.findById(id).then(
-                    function(res) {
-                        return res;
-                    },
-                    function(err) {
-                        return err;
-                    });
+        const m = this.model;
+        return this.form.validId(id).then(function(errors: any) {
+            if (errors.length > 0) {
+                return errors;
             } else {
-                return result;
+                return m.findById(id);
             }
+        }).then(function(result){
+            return result;
         });
     }
 
     public newUser(user: IUser): Promise<IUserModel | ValidationError[]> {
-        return this.form.polulate(user).validate('create').then(function(result) {
-            if (result === true) {
-                return new this.model(user).save().then(
-                    function(res) {
-                        return res;
+        const m = this.model;
+        return this.form.polulate(user).validate('create').then(function(errors) {
+            if (errors.length > 0) {
+                return errors;
+            } else {
+                return new m(user).save()
+                .then(
+                    function(result) {
+                        return result;
                     },
                     function(err) {
                         return err;
                     }
                 );
-            } else {
-                return result;
             }
         });
     }
 
     public updateUser(user: IUser): Promise<IUserModel | ValidationError[]> {
-        return this.form.polulate(user).validate('update').then(function(result) {
-            if (result === true) {
-                return this.model.findById(user.id)
-                .then(function(entity) {
-                    return entity.hydrate(user).save();
+        const m = this.model;
+        return this.form.polulate(user).validate('update').then(function(errors) {
+            if (errors.length > 0) {
+                return errors;
+            } else {
+                return m.findById(user.id)
+                .then(
+                    function(entity) {
+                        return entity.hydrate(user).save();
                 })
                 .then(
                     function(res) {
@@ -71,17 +74,17 @@ export class UserService {
                         return err;
                     }
                 );
-            } else {
-                return result;
             }
         });
     }
 
     public deleteUser(id: string): Promise<IUserModel | ValidationError[]> {
-        let user: IUser = { id: id };
-        return this.form.polulate(user).validate('id').then(function(result) {
-            if (result === true) {
-                return this.model.findByIdAndRemove(id).then(
+        const m = this.model;
+        return this.form.validId(id).then(function(errors) {
+            if (errors.length > 0) {
+                return errors;
+            } else {
+                return m.findByIdAndRemove(id).then(
                     function(res) {
                         return res;
                     },
@@ -89,8 +92,6 @@ export class UserService {
                         return err;
                     }
                 );
-            } else {
-                return result;
             }
         });
     }

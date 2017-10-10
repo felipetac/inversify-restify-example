@@ -19,7 +19,7 @@ export class UserController implements interfaces.Controller {
     }
 
     @Get('/:id')
-    private getUser(req: restify.Request): Promise<IUserModel | ValidationError[]> {
+    private getUser(req: restify.Request) {
         let user = this.userService.getUser(req.params.id);
         return user;
     }

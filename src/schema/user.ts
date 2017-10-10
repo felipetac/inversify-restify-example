@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import {IUser} from '../interface/user';
+import { IUser } from '../interface/user';
 
 const UserSchema = new Schema({
     createdAt: Date,
