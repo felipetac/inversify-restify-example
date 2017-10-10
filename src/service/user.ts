@@ -24,7 +24,7 @@ export class UserService {
         const m = this.model;
         return this.form.validId(id)
         .then(
-            function(errors: any) {
+            function(errors) {
                 if (errors.length > 0) {
                     return errors;
                 } else {
@@ -66,6 +66,9 @@ export class UserService {
                 return m.findById(user.id)
                 .then(
                     function(entity) {
+                        if (!entity) {
+                            return {success: 'false', msg: `Usuário com id:${user.id} não foi encontrado!`};
+                        }
                         return entity.hydrate(user).save();
                     }
                 )
