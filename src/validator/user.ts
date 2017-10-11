@@ -12,7 +12,7 @@ export class IsUserAlreadyExistConstraint implements ValidatorConstraintInterfac
 
     public validate(id: string, args: ValidationArguments) {
         const model: Model<IUserModel> = container.get(TYPES.UserModel);
-        const validator = new Validator();
+        const validator: Validator = container.get(TYPES.Validator);
         if (validator.isMongoId(id)) {
             return model.findById(id).then(user => {
                 if (user) {

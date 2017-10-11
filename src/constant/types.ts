@@ -5,7 +5,8 @@ const TYPES = {
     ServerRestify: Symbol('ServerRestify'),
     UserForm: Symbol('UserForm'),
     UserModel: Symbol('UserModel'),
-    UserService: Symbol('UserService')
+    UserService: Symbol('UserService'),
+    Validator: Symbol('Validator')
 };
 
 export default TYPES;
